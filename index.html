@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>LLMs for Architecture & Engineering - Complete Master Deck</title>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
+
+    :root {
+        --bg-color: #FAF8F5;
+        --text-color: #1A2530;
+        --accent-red: #B04A38;
+        --accent-light: #F2D6D0;
+        --card-bg: #FFFFFF;
+        --border-color: #E2DDD5;
+        --code-bg: #22272E;
+        --code-text: #F0F6FC;
+        --muted-text: #57606A;
+        --success-bg: #E6F4EA;
+        --success-border: #34A853;
+        --danger-bg: #FCE8E6;
+        --danger-border: #EA4335;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+        font-family: 'Inter', sans-serif;
+        background-color: #0f172a;
+        color: var(--text-color);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 40px;
+        gap: 40px;
+    }
+
+    .slide {
+        background-color: var(--bg-color);
+        width: 1280px;
+        height: 720px; 
+        padding: 40px 50px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        border-radius: 12px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        overflow: hidden;
+    }
+
+    .header {
+        border-bottom: 3px solid var(--accent-red);
+        padding-bottom: 8px;
+        margin-bottom: 12px;
+    }
+
+    .slide-subtitle {
+        font-size: 0.9rem;
+        font-weight: 800;
+        color: var(--accent-red);
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        margin-bottom: 3px;
+    }
+
+    h1 { font-size: 1.9rem; color: var(--text-color); font-weight: 800; letter-spacing: -0.5px; }
+    
+    .content-area {
+        flex-grow: 1;
+        display: flex;
+        gap: 20px;
+        align-items: stretch;
+    }
+
+    .col { flex: 1; display: flex; flex-direction: column; gap: 10px; }
+    .col-40 { flex: 0.4; display: flex; flex-direction: column; gap: 10px; }
+    .col-60 { flex: 0.6; display: flex; flex-direction: column; gap: 10px; }
+    
+    .card {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        padding: 14px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+    }
+
+    .card-title {
+        font-weight: 800;
+        font-size: 1rem;
+        color: var(--accent-red);
+        margin-bottom: 4px;
+    }
+
+    p, li { font-size: 0.9rem; line-height: 1.35; color: var(--text-color); }
+    li { margin-bottom: 3px; margin-left: 15px; }
+
+    .prompt-box {
+        background-color: var(--code-bg);
+        color: var(--code-text);
+        font-family: 'Consolas', 'Courier New', monospace;
+        font-size: 0.78rem;
+        padding: 10px;
+        border-radius: 6px;
+        line-height: 1.3;
+        white-space: pre-wrap;
+        border-left: 4px solid var(--accent-red);
+        height: 100%;
+        overflow-y: auto;
+    }
+
+    .footer {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: var(--muted-text);
+        border-top: 1px solid var(--border-color);
+        padding-top: 6px;
+        margin-top: 6px;
+    }
+
+    .title-slide {
+        background-color: var(--accent-red);
+        color: white;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+    .title-slide h1 { color: white; font-size: 3.8rem; margin: 15px 0; }
+    .title-slide .sub { color: var(--accent-light); font-size: 1.5rem; font-weight: 400; }
+    .title-slide .presenter { margin-top: 35px; font-weight: 700; color: white; font-size: 1.3rem; line-height: 1.5; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    th, td { border: 1px solid var(--border-color); padding: 6px 8px; text-align: left; }
+    th { background-color: var(--accent-red); color: white; font-weight: 700; }
+    tr:nth-child(even) { background-color: #F4F1EA; }
+
+    .bad-prompt { background-color: var(--danger-bg); border: 2px solid var(--danger-border); padding: 8px; border-radius: 6px; }
+    .bad-prompt .card-title { color: var(--danger-border); }
+    
+    .good-prompt { background-color: var(--success-bg); border: 2px solid var(--success-border); padding: 8px; border-radius: 6px; height: 100%; }
+    .good-prompt .card-title { color: var(--success-border); }
+
+    .bar-container { display: flex; align-items: center; gap: 15px; margin-bottom: 8px; }
+    .bar-label { width: 150px; font-weight: 700; font-size: 0.85rem; }
+    .bar-track { flex-grow: 1; background: #E2DDD5; height: 20px; border-radius: 4px; overflow: hidden; }
+    .bar-fill { height: 100%; background: var(--accent-red); display: flex; align-items: center; justify-content: flex-end; padding-right: 8px; color: white; font-weight: 700; font-size: 0.75rem; }
+</style>
+</head>
+<body>
+
+<!-- SLIDE 1: TITLE SLIDE -->
+<div class="slide title-slide">
+    <p class="slide-subtitle" style="color: var(--accent-light); font-size: 1.3rem;">CPD Session | Square Unit Pvt. Ltd.</p>
+    <h1>LLMs × ARCHITECTURE</h1>
+    <p class="sub">Practical AI, Legal Precepts & 10 Real-World AEC Use Cases</p>
+    <div class="presenter">
+        Er. Pranaya Nakarmi<br>
+        <span style="font-weight: 400; font-size: 1rem;">CEO, Venture Four Technology Pvt. Ltd.<br>October 2, Friday · 3 PM | Square Unit, Balkhu, Kathmandu</span>
+    </div>
+</div>
+
+<!-- SLIDE 2: THE PROBLEM (DATA CHART) -->
+<div class="slide">
+    <div class="header">
+        <div class="slide-subtitle">Workflow Friction & Data Analysis</div>
+        <h1>How much of your day is actually spent designing?</h1>
+    </div>
+    <div class="content-area">
+        <div class="col-60">
+            <div class="card" style="height: 100%; display: flex; flex-direction: column; justify-content: center;">
+                <div class="card-title">AEC Industry Time Allocation Survey</div>
+                <div class="bar-container">
+                    <div class="bar-label">Admin / Overhead</div>
+                    <div class="bar-track"><div class="bar-fill" style="width: 65%;">65%</div></div>
+                </div>
+                <div class="bar-container">
+                    <div class="bar-label">Core Design</div>
+                    <div class="bar-track"><div class="bar-fill" style="width: 35%; background: #34A853;">35%</div></div>
+                </div>
+                <p style="margin-top: 8px; font-size: 0.8rem; color: var(--muted-text);">*Baseline: Emails, meetings, regulations, documentation, coordination, revisions surrounding core physical design.</p>
+            </div>
+        </div>
+        <div class="col-40">
+            <div class="card" style="height: 100%; background: #F4F1EA; display: flex; flex-direction: column; justify-content: center;">
+                <div class="card-title">The Core Question</div>
+                <p style="font-size: 1.05rem; font-weight: 600;">
+                    What if AI could handle the 65% administrative wrapper around your projects?
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="footer"><span>Square Unit CPD Masterclass</span><span>Workflow Friction</span></div>
+</div>
+
+<!-- SLIDE 3: AI THEORIES & TAXONOMY -->
+<div class="slide">
+    <div class="header">
+        <div class="slide-subtitle">Theoretical Foundations</div>
+        <h1>Artificial Intelligence Taxonomies & LLM Placement</h1>
+    </div>
+    <div class="content-area">
+        <div class="col-60">
+            <div class="card" style="height: 100%;">
+                <div class="card-title">Russell & Norvig's 4 Schools of Thought</div>
+                <table>
+                    <tr>
+                        <th style="background: transparent; color: var(--text-color);"></th>
+                        <th>Human-like</th>
+                        <th>Rational (Ideal)</th>
+                    </tr>
+                    <tr>
+                        <td><b>Thought</b></td>
+                        <td>Cognitive Modeling</td>
+                        <td>Laws of Thought (Logic)</td>
+                    </tr>
+                    <tr>
+                        <td><b>Behaviour</b></td>
+                        <td><b>Systems that act like humans (LLMs)</b></td>
+                        <td>Rational Agents (Goal optimization)</td>
+                    </tr>
+                </table>
+                <p style="margin-top: 6px; font-size: 0.8rem;"><b>Theory Insight:</b> LLMs simulate human linguistic behavior via probabilistic modeling rather than native symbolic reasoning.</p>
+            </div>
+        </div>
+        <div class="col-40">
+            <div class="card" style="height: 100%; background: var(--accent-red); color: white; border: none;">
+                <div class="card-title" style="color: white;">John McCarthy (1956)</div>
+                <p style="color: white; font-size: 0.95rem; line-height: 1.3; margin-bottom: 6px;"><i>"The science and engineering of making intelligent machines."</i></p>
+                <p style="color: white; font-size: 0.8rem;">Shifts focus from mimicking biological consciousness to achieving functional computational goals.</p>
+            </div>
+        </div>
+    </div>
+    <div class="footer"><span>Square Unit CPD Masterclass</span><span>Theoretical Foundations</span></div>
+</div>
+
+<!-- SLIDE 4: LEGAL PRECEPTS OF AI IN ENGINEERING -->
+<div class="slide">
+    <div class="header">
+        <div class="slide-subtitle">Legal & Regulatory Framework</div>
+        <h1>Legal Precepts of AI in Architecture & Engineering</h1>
+    </div>
+    <div class="content-area">
+        <div class="col">
+            <div class="card" style="height: 100%; border-top: 4px solid var(--accent-red);">
+                <div class="card-title">1. Professional Liability & Non-Delegable Duty</div>
+                <p>An algorithm cannot hold a professional license. <b>Legal liability rests 100% with the human practitioner</b> who signs and seals drawings.</p>
+            </div>
+            <div class="card" style="height: 100%; border-top: 4px solid var(--accent-red);">
+                <div class="card-title">2. Intellectual Property & Copyright</div>
+                <p>AI-generated text lacks traditional human authorship protections. Feeding proprietary firm data into public models may violate client NDAs.</p>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card" style="height: 100%; border-top: 4px solid var(--accent-red);">
+                <div class="card-title">3. Standard of Care & Negligence</div>
+                <p>Relying blindly on unverified AI outputs for structural or code parameters violates the professional "Standard of Care," leading to negligence claims.</p>
+            </div>
+            <div class="card" style="height: 100%; border-top: 4px solid var(--accent-red);">
+                <div class="card-title">4. Compliance & Statutory Governance</div>
+                <p>Municipal bylaws demand human accountability. AI acts strictly as an uncertified assistant; statutory compliance requires human verification.</p>
+            </div>
+        </div>
+    </div>
+    <div class="footer"><span>Square Unit CPD Masterclass</span><span>Legal Precepts & Governance</span></div>
+</div>
+
+<!-- SLIDE 5: COLLABORATION MODEL -->
+<div class="slide">
+    <div class="header">
+        <div class="slide-subtitle">Collaboration Dynamics</div>
+        <h1>Architect + AI Division of Labor</h1>
+    </div>
+    <div class="content-area">
+        <div class="col">
+            <div class="card" style="height: 100%; border-top: 4px solid var(--accent-red);">
+                <div class="card-title">ARCHITECT (Human Agency)</div>
+                <ul>
+                    <li>Design intent & spatial intuition</li>
+                    <li>Context, site constraints & experience</li>
+                    <li>Professional judgment & creativity</li>
+                    <li>Legal responsibility & final sign-off</li>
+                </ul>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card" style="height: 100%; border-top: 4px solid #34A853;">
+                <div class="card-title" style="color: #34A853;">LLM (Computational Engine)</div>
+                <ul>
+                    <li>Information structuring & synthesis</li>
+                    <li>Generating diverse design alternatives</li>
+                    <li>Technical research & document summaries</li>
+                    <li>Drafting meeting logs & transforming data formats</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="footer"><span>Square Unit CPD Masterclass</span><span>AI PROPOSES • PROFESSIONAL DECIDES</span></div>
+</div>
+
+<!-- SLIDE 6: TOOLKIT BENCHMARK -->
+<div class="slide">
+    <div class="header">
+        <div class="slide-subtitle">Ecosystem & Data Benchmarks</div>
+        <h1>Enterprise LLM Selection Matrix</h1>
+    </div>
+    <div class="content-area">
+        <table style="height: 100%;">
+            <tr>
+                <th>Model / Platform</th>
+                <th>Primary Architecture Strengths</th>
+                <th>Optimal AEC Task</th>
+            </tr>
+            <tr>
+                <td><b>ChatGPT (OpenAI)</b></td>
+                <td>Multimodal reasoning, custom GPTs, Python execution</td>
+                <td>Rapid concept drafting & Python GIS scripts</td>
+            </tr>
+            <tr>
+                <td><b>Claude (Anthropic)</b></td>
+                <td>Massive context window, nuanced technical writing</td>
+                <td>Contract synthesis & massive spec analysis</td>
+            </tr>
+            <tr>
+                <td><b>NotebookLM (Google)</b></td>
+                <td>Grounded RAG architecture, zero-hallucination local search</td>
+                <td>Querying local NBC building codes & soil reports</td>
+            </tr>
+            <tr>
+                <td><b>Perplexity AI</b></td>
+                <td>Real-time web crawling with direct citation links</td>
+                <td>Material supplier comparisons & standard verification</td>
+            </tr>
+        </table>
+    </div>
+    <div class="footer"><span>Square Unit CPD Masterclass</span><span>Tool Ecosystem</span></div>
+</div>
+
+<!-- SLIDE 7: RESPONSIBLE ADOPTION -->
+<div class="slide">
+    <div class="header">
+        <div class="slide-subtitle">Risk Management & Governance</div>
+        <h1>Do's and Don'ts: Enterprise AI Guardrails</h1>
+    </div>
+    <div class="content-area">
+        <div class="col good-prompt card">
+            <div class="card-title">✅ DO (Safe Workflows)</div>
+            <ul>
+                <li>Verify outputs against primary engineering sources</li>
+                <li>Provide complete project background (Context)</li>
+                <li>Use AI outputs strictly as working drafts</li>
+                <li>Preserve client confidentiality and data privacy</li>
+                <li>Treat the model as an energetic junior assistant</li>
+            </ul>
+        </div>
+        <div class="col bad-prompt card">
+            <div class="card-title">❌ DON'T (Strict Stops)</div>
+            <ul>
+                <li>Paste unmasked client data or sensitive tenders</li>
+                <li>Trust generated numbers or calculations blindly</li>
+                <li>Bypass professional review or sign-offs</li>
+                <li>Use LLMs for final structural/seismic calculations</li>
+                <li>Assume outdated web models know local municipal bylaws</li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer"><span>Square Unit CPD Masterclass</span><span>AI PROPOSES • PROFESSIONAL DECIDES</span></div>
+</div>
+
+<!-- SLIDE 8: PROMPT ARCHITECTURE (RISEN) -->
+<div class="slide">
+    <div class="header">
+        <div class="slide-subtitle">Prompt Engineering Theory</div>
+        <h1>The R + C + T + I + C + O Framework</h1>
+    </div>
+    <div class="content-area">
+        <div class="col-40">
+            <div class="card" style="height: 100%; display: flex; flex-direction: column; justify-content: space-around;">
+                <div><span style="font-weight: 800; color: var(--accent-red);">R - ROLE:</span> Persona alignment</div>
+                <div><span style="font-weight: 800; color: var(--accent-red);">C - CONTEXT:</span> Project background</div>
+                <div><span style="font-weight: 800; color: var(--accent-red);">T - TASK:</span> Core objective</div>
+                <div><span style="font-weight: 800; color: var(--accent-red);">I - INPUT:</span> Raw data source</div>
+                <div><span style="font-weight: 800; color: var(--accent-red);">C - CONSTRAINTS:</span> Negative bounds</div>
+                <div><span style="font-weight: 800; color: var(--accent-red);">O - OUTPUT:</span> Formatting rule</div>
+            </div>
+        </div>
+        <div class="col-60">
+            <div class="card bad-prompt" style="margin-bottom: 6px;">
+                <div class="card-title">❌ WEAK PROMPT</div>
+                <p>"Design a sustainable hotel."</p>
+            </div>
+            <div class="card good-prompt" style="height: auto;">
+                <div class="card-title">✅ STRUCTURED PROMPT</div>
+                <p>Role + Context + Task + Input + Constraints + Output. <b>Context eliminates hallucinations.</b></p>
+            </div>
+        </div>
+    </div>
+    <div class="footer"><span>Square Unit CPD Masterclass</span><span>Prompt Engineering</span></div>
+</div>
+
+<!-- SLIDE 9: USE CASE 01 -->
+<div class="slide">
+    <div class="header">
+        <div class="slide-subtitle">Use Case 01</div>
+        <h1>Client Brief Extraction</h1>
+    </div>
+    <div class="content-area">
+        <div class="col">
+            <div class="card" style="height: 100%;">
+                <div class="card-title">Task & Real Sample Case</div>
+                <p><b>Task:</b> Parse unstructured client emails to extract requirements.</p>
+                <p style="margin-top: 6px;"><b>Sample Case:</b> A client emails a 4-page rambling document for a residential duplex in Jhamsikhel. The LLM instantly organizes it into spatial, zoning, and budget constraints.</p>
+                <div style="margin-top: 8px;" class="bad-prompt">
+                    <div class="card-title" style="font-size: 0.85rem;">❌ Bad Prompt</div>
+                    <p style="font-size: 0.75rem;">"Design this building for the client."</p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card" style="height: 100%; display: flex; flex-direction: column;">
+                <div class="card-title">✅ Professional Prompt</div>
+                <div class="prompt-box">"Act as an architectural programming assistant. Analyze this client brief and extract functional, spatial and environmental requirements. Separate facts from assumptions. List missing information and questions for the client."</div>
+            </div>
+        </div>
+    </div>
+    <div class="footer"><span>Square Unit CPD Masterclass</span><span>Use Case 01</span></div>
+</div>
+
+<!-- SLIDE 10: USE CASE 02 -->
+<div class="slide">
+    <div class="header">
+        <div class="slide-subtitle">Use Case 02</div>
+        <h1>Space Programming (100-Room Hotel)</h1>
+    </div>
+    <div class="content-area">
+        <div class="col">
+            <div class="card" style="height: 100%;">
+                <div class="card-title">Task & Real Sample Case</div>
+                <p><b>Task:</b> Build structured preliminary room mixes and adjacencies.</p>
+                <p style="margin-top: 6px;"><b>Sample Case:</b> Designing a boutique resort in Pokhara requiring precise Back-of-House (BOH) to guest area ratios before laying out floor plans.</p>
+                <div style="margin-top: 8px;" class="bad-prompt">
+                    <div class="card-title" style="font-size: 0.85rem;">❌ Bad Prompt</div>
+                    <p style="font-size: 0.75rem;">"Design a 100-room hotel."</p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card" style="height: 100%; display: flex; flex-direction: column;">
+                <div class="card-title">✅ Professional Prompt</div>
+                <div class="prompt-box">"I'm designing a 100-room hotel. Develop a space-programming framework covering guest areas, BOH, service and accessibility. For each space, identify function, users, adjacencies and open questions."</div>
+            </div>
+        </div>
+    </div>
+    <div class="footer"><span>Square Unit CPD Masterclass</span><span>Use Case 02</span></div>
+</div>
+
+<!-- SLIDE 11: USE CASE 03 -->
+<div class="slide">
+    <div class="header">
+        <div class="slide-subtitle">Use Case 03</div>
+        <h1>Research Framework (Sustainable Office)</h1>
+    </div>
+    <div class="content-area">
+        <div class="col">
+            <div class="card" style="height: 100%;">
+                <div class="card-title">Task & Real Sample Case</div>
+                <p><b>Task:</b> Establish systematic environmental verification roadmaps.</p>
+                <p style="margin-top: 6px;"><b>Sample Case:</b> A mid-rise commercial building in Kathmandu needing passive cooling and daylighting strategies tailored to local climatic data.</p>
+                <div style="margin-top: 8px;" class="bad-prompt">
+                    <div class="card-title" style="font-size: 0.85rem;">❌ Bad Prompt</div>
+                    <p style="font-size: 0.75rem;">"Tell me about sustainable buildings."</p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card" style="height: 100%; display: flex; flex-direction: column;">
+                <div class="card-title">✅ Professional Prompt</div>
+                <div class="prompt-box">"I am designing a mid-rise office building in Kathmandu. Create a research framework covering orientation, daylighting, ventilation and envelope. For each topic, give the research question, data required and a metric to verify."</div>
+            </div>
+        </div>
+    </div>
+    <div class="footer"><span>Square Unit CPD Masterclass</span><span>Use Case 03</span></div>
+</div>
+
+<!-- SLIDE 12: USE CASE 04 -->
+<div class="slide">
+    <div class="header">
+        <div class="slide-subtitle">Use Case 04</div>
+        <h1>Meeting Minutes to Action Tracker</h1>
+    </div>
+    <div class="content-area">
+        <div class="col">
+            <div class="card" style="height: 100%;">
+                <div class="card-title">Task & Real Sample Case</div>
+                <p><b>Task:</b> Convert chaotic meeting notes into trade accountability matrices.</p>
+                <p style="margin-top: 6px;"><b>Sample Case:</b> A coordination meeting between structural, MEP, and architectural consultants where decisions were recorded haphazardly.</p>
+                <div style="margin-top: 8px;" class="bad-prompt">
+                    <div class="card-title" style="font-size: 0.85rem;">❌ Bad Prompt</div>
+                    <p style="font-size: 0.75rem;">"Summarize the meeting."</p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card" style="height: 100%; display: flex; flex-direction: column;">
+                <div class="card-title">✅ Professional Prompt</div>
+                <div class="prompt-box">"Convert these meeting notes into structured minutes: decisions made, issues raised, responsibilities, deadlines and pending items. Do not invent information that wasn't discussed."</div>
+            </div>
+        </div>
+    </div>
+    <div class="footer"><span>Square Unit CPD Masterclass</span><span>Use Case 04</span></div>
+</div>
+
+<!-- SLIDE 13: USE CASE 05 -->
+<div class="slide">
+    <div class="header">
+        <div class="slide-subtitle">Use Case 05</div>
+        <h1>Preliminary Cost Estimation Framework</h1>
+    </div>
+    <div class="content-area">
+        <div class="col">
+            <div class="card" style="height: 100%;">
+                <div class="card-title">Task & Real Sample Case</div>
+                <p><b>Task:</b> Break briefs into major financial categories and flag risks.</p>
+                <p style="margin-top: 6px;"><b>Sample Case:</b> Establishing early feasibility budgets for a multi-use complex without prematurely generating an unverified Bill of Quantities.</p>
+                <div style="margin-top: 8px;" class="bad-prompt">
+                    <div class="card-title" style="font-size: 0.85rem;">❌ Bad Prompt</div>
+                    <p style="font-size: 0.75rem;">"What will this building cost?"</p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card" style="height: 100%; display: flex; flex-direction: column;">
+                <div class="card-title">✅ Professional Prompt</div>
+                <div class="prompt-box">"Break this brief into major cost categories, flag items needing QS confirmation, and list your rate assumptions. Don't present this as a final price."</div>
+            </div>
+        </div>
+    </div>
+    <div class="footer"><span>Square Unit CPD Masterclass</span><span>Use Case 05</span></div>
+</div>
+
+<!-- SLIDE 14: USE CASE 06 -->
+<div class="slide">
+    <div class="header">
+        <div class="slide-subtitle">Use Case 06</div>
+        <h1>NBC Code Compliance Querying</h1>
+    </div>
+    <div class="content-area">
+        <div class="col">
+            <div class="card" style="height: 100%;">
+                <div class="card-title">Task & Real Sample Case</div>
+                <p><b>Task:</b> Audit local seismic code requirements via secure document RAG.</p>
+                <p style="margin-top: 6px;"><b>Sample Case:</b> Cross-checking ductile detailing clauses in NBC 105 for a residential frame building in Kathmandu Valley.</p>
+                <div style="margin-top: 8px;" class="bad-prompt">
+                    <div class="card-title" style="font-size: 0.85rem;">❌ Bad Prompt</div>
+                    <p style="font-size: 0.75rem;">"Is my building code compliant?"</p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card" style="height: 100%; display: flex; flex-direction: column;">
+                <div class="card-title">✅ Professional Prompt</div>
+                <div class="prompt-box">"Based on the uploaded NBC 105 (Seismic Design of Buildings in Nepal) document, what are the specific structural limitations and ductility requirements for a 4-storey residential building located in Kathmandu Valley? Cite the specific sections."</div>
+            </div>
+        </div>
+    </div>
+    <div class="footer"><span>Square Unit CPD Masterclass</span><span>Use Case 06</span></div>
+</div>
+
+<!-- SLIDE 15: USE CASE 07 -->
+<div class="slide">
+    <div class="header">
+        <div class="slide-subtitle">Use Case 07</div>
+        <h1>Quantity Surveying & Material Ratios</h1>
+    </div>
+    <div class="content-area">
+        <div class="col">
+            <div class="card" style="height: 100%;">
+                <div class="card-title">Task & Real Sample Case</div>
+                <p><b>Task:</b> Calculate material breakdowns from structural volumes.</p>
+                <p style="margin-top: 6px;"><b>Sample Case:</b> Determining exact cement bags, sand, and aggregate requirements for foundation footing pours using standard mix proportions.</p>
+                <div style="margin-top: 8px;" class="bad-prompt">
+                    <div class="card-title" style="font-size: 0.85rem;">❌ Bad Prompt</div>
+                    <p style="font-size: 0.75rem;">"How much concrete materials do I need?"</p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card" style="height: 100%; display: flex; flex-direction: column;">
+                <div class="card-title">✅ Professional Prompt</div>
+                <div class="prompt-box">"Act as an expert quantity surveyor in Nepal. I have a concrete volume of 45 cubic metres for M20 grade concrete. Using a nominal mix ratio of 1:1.5:3, calculate the exact bags of cement, volume of sand (cft) and volume of aggregate needed. Format the output as a clean table for a client proposal."</div>
+            </div>
+        </div>
+    </div>
+    <div class="footer"><span>Square Unit CPD Masterclass</span><span>Use Case 07</span></div>
+</div>
+
+<!-- SLIDE 16: USE CASE 08 -->
+<div class="slide">
+    <div class="header">
+        <div class="slide-subtitle">Use Case 08</div>
+        <h1>Rapid Concept Render Prompting</h1>
+    </div>
+    <div class="content-area">
+        <div class="col">
+            <div class="card" style="height: 100%;">
+                <div class="card-title">Task & Real Sample Case</div>
+                <p><b>Task:</b> Generate descriptive AI visual prompts mixing modern geometry with local materials.</p>
+                <p style="margin-top: 6px;"><b>Sample Case:</b> Creating mood board imagery for a contemporary residence incorporating traditional Newari brickwork (*Maapaa*) in Patan.</p>
+                <div style="margin-top: 8px;" class="bad-prompt">
+                    <div class="card-title" style="font-size: 0.85rem;">❌ Bad Prompt</div>
+                    <p style="font-size: 0.75rem;">"Make a cool house render."</p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card" style="height: 100%; display: flex; flex-direction: column;">
+                <div class="card-title">✅ Professional Prompt</div>
+                <div class="prompt-box">"A photorealistic render of a modern 3-storey house in Lalitpur, Nepal. Traditional Newari brickwork (Maapaa) on the ground floor, paired with minimalist glass and exposed concrete above. Midday clear sky, lush local courtyard vegetation."</div>
+            </div>
+        </div>
+    </div>
+    <div class="footer"><span>Square Unit CPD Masterclass</span><span>Use Case 08</span></div>
+</div>
+
+<!-- SLIDE 17: USE CASE 09 -->
+<div class="slide">
+    <div class="header">
+        <div class="slide-subtitle">Use Case 09</div>
+        <h1>Site Coordination & Voice Notes</h1>
+    </div>
+    <div class="content-area">
+        <div class="col">
+            <div class="card" style="height: 100%;">
+                <div class="card-title">Task & Real Sample Case</div>
+                <p><b>Task:</b> Transform site audio transcripts into action logs and RFIs.</p>
+                <p style="margin-top: 6px;"><b>Sample Case:</b> A resident engineer walking a multi-story site in Balkhu and dictating rapid observations regarding column honeycombing and reinforcement alignment.</p>
+                <div style="margin-top: 8px;" class="bad-prompt">
+                    <div class="card-title" style="font-size: 0.85rem;">❌ Bad Prompt</div>
+                    <p style="font-size: 0.75rem;">"Fix the issues mentioned in my site audio recording."</p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card" style="height: 100%; display: flex; flex-direction: column;">
+                <div class="card-title">✅ Professional Prompt</div>
+                <div class="prompt-box">"Convert this site audio transcript into a structured matrix: 1. Critical Non-Conformances 2. Consultant RFIs 3. Responsible Parties and Deadlines. Do not assume facts not stated."</div>
+            </div>
+        </div>
+    </div>
+    <div class="footer"><span>Square Unit CPD Masterclass</span><span>Use Case 09</span></div>
+</div>
+
+<!-- SLIDE 18: USE CASE 10 -->
+<div class="slide">
+    <div class="header">
+        <div class="slide-subtitle">Use Case 10</div>
+        <h1>Contract & Tender Reviewing</h1>
+    </div>
+    <div class="content-area">
+        <div class="col">
+            <div class="card" style="height: 100%;">
+                <div class="card-title">Task & Real Sample Case</div>
+                <p><b>Task:</b> Analyze tender clauses to highlight liability gaps.</p>
+                <p style="margin-top: 6px;"><b>Sample Case:</b> Reviewing an ambiguous sub-consultant agreement containing undefined milestone penalties and asymmetric liability clauses.</p>
+                <div style="margin-top: 8px;" class="bad-prompt">
+                    <div class="card-title" style="font-size: 0.85rem;">❌ Bad Prompt</div>
+                    <p style="font-size: 0.75rem;">"Is this contract good?"</p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card" style="height: 100%; display: flex; flex-direction: column;">
+                <div class="card-title">✅ Professional Prompt</div>
+                <div class="prompt-box">"Act as a legal contract specialist in AEC. Review the attached tender clause text and highlight: 1. Ambiguous milestone definitions 2. Unbalanced liability risks 3. Missing deliverable criteria. Format as a bulleted risk summary."</div>
+            </div>
+        </div>
+    </div>
+    <div class="footer"><span>Square Unit CPD Masterclass</span><span>Use Case 10</span></div>
+</div>
+
+<!-- SLIDE 19: CONCLUSION -->
+<div class="slide title-slide" style="text-align: left; padding: 60px;">
+    <p class="slide-subtitle" style="color: var(--accent-light); font-size: 1.4rem; margin-bottom: 15px;">Architecture + AI</p>
+    <h1 style="font-size: 2.3rem; line-height: 1.3; margin-bottom: 25px; text-align: left;">"DON'T ASK AI TO DESIGN YOUR BUILDING. Ask it to help you understand the brief, ask better questions, structure research, explore possibilities, process information, document decisions and coordinate work. THEN: YOU DESIGN."</h1>
+    
+    <div style="background: rgba(0,0,0,0.2); padding: 15px 25px; border-left: 6px solid var(--accent-light); display: inline-block;">
+        <p style="font-size: 1.35rem; font-weight: 800; color: white; margin: 0;">
+            AI Proposes • Professional Verifies • Engineer Decides
+        </p>
+    </div>
+
+    <div style="margin-top: 35px; border-top: 2px solid rgba(255,255,255,0.3); padding-top: 15px;">
+        <h2 style="color: white; font-size: 1.4rem;">Questions & Discussion</h2>
+        <p style="font-size: 0.95rem; color: #F2D6D0; margin-top: 3px;">Er. Pranaya Nakarmi | CEO, Venture Four Technology Pvt. Ltd. | www.squareunit.com.np</p>
+    </div>
+</div>
+
+</body>
+</html>
